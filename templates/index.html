@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div id="background">
+        <nav>
+            <div class="logo">Gillter Bottles</div>
+            <button id="connect-button" class="wallet-button">Connect Wallet</button>
+            <span id="wallet-address" class="wallet-address">Not Connected</span>
+            <button id="disconnect-button" class="wallet-button" style="display: none;">Disconnect</button>
+        </nav>
+
+        <div class="content">
+
+            <div class="hello">
+                <h2>Gillter Bottles</h2>
+                Welcome to Gillter Bottles! Powered by the Gillter Protocol, our platform securely stores your posts and
+                messages on the blockchain, ensuring transparency and immutability. Log in with your web3 wallet for
+                anonymous interactions, using your wallet address as your identity. Refresh the Posts section to
+                randomly receive 5 new posts each time. Explore Gillter Bottles for a unique, secure, and anonymous
+                communication experience.
+                <br><br>
+                Now, Send your bottles to the moon!
+
+                <p></p>
+            </div>
+
+            <form id="post-form" action="/add_post" method="POST" enctype="multipart/form-data">
+                <input type="text" name="title" placeholder="Title" required><br>
+                <textarea name="content" rows="5" placeholder="Bottle Content" required></textarea><br>
+                <!-- Hidden input field to store wallet address -->
+                <input type="hidden" id="wallet-address-input" name="wallet_address" value="">
+                <button type="submit" class="send-button">To The Moon</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="posts" id="postList">
+        <button id="refresh-button" class="refresh-button">Refresh</button>
+        <h2>The Bottles</h2>
+        <!-- 这里是帖子列表的容器，后台生成 -->
+        {% for bottle in bottles %}
+        <div class="post">
+            <h3 class="post-title">
+                <a href="#" data-post-id="{{ bottle.id }}">{{ bottle.title }}</a>
+            </h3>
+            <hr>
+            <p class="post-content">{{ bottle.content[:100] }}{% if bottle.content|length > 100 %}...{% endif %}</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="footer">
+        <p>Have a Good Day </p>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var walletAddress = localStorage.getItem('walletAddress');
+            if (walletAddress) {
+                var links = document.querySelectorAll('.post-title a');
+                links.forEach(function(link) {
+                    var postId = link.getAttribute('data-post-id');
+                    link.href = `/post/${postId}?wallet_address=${encodeURIComponent(walletAddress)}`;
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

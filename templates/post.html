@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./post_style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='post_style.css') }}">
+
+
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">Gillter Bottles</div>
+        <!-- <button id="connect-button" class="wallet-button">Connect Wallet</button> -->
+        <!-- <span id="wallet-address" class="wallet-address">Not Connected</span> -->
+         <p class="wallet-address">{{addr}}</p>
+        <!-- <button id="disconnect-button" class="wallet-button" style="display: none;"></button> -->
+    </nav>
+
+    <!-- 帖子详情内容 -->
+    <div class="post-detail-content">
+        <!-- 帖子标题 -->
+        <h1 class="post-title">{{ bottle.title }}</h1>
+        <hr>
+
+        <!-- 帖子正文 -->
+        <div class="post-body">
+            <p style="font-family: 'Comic Sans MS'; font-size: 1.2em; color: #333;">Author: {{ bottle.poster }}</p>
+            <hr>
+            <p>{{ bottle.content }}</p>
+        </div>
+
+        <!-- 留言输入栏 -->
+        <hr>
+        <div class="comment-section">
+            <h3>Replies</h3>
+            <form action="/add_comment" method="POST" enctype="multipart/form-data">
+                <textarea name="reply" rows="4" placeholder="Input your opinions" required></textarea><br>
+                <input type="hidden" id="wallet-address-input" name="wallet_address" value="">
+                <button type="submit" class="submit-button">Send</button>
+            </form>
+        </div>
+
+        <!-- 留言展示 -->
+        <hr>
+        <div class="comments">
+            <h3>Replies</h3>
+            {% for comment in replies %}
+                <div class="comment">
+                    <p><strong>{{ comment.replier }}：</strong><br>{{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Have a Good Day </p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

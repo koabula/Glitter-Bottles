@@ -1,0 +1,190 @@
+/* 全局样式保持不变 */
+
+#background {
+    background-image: url('./background.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    color: #fff;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(51, 51, 51, 0.8);
+    color: white;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+.logo {
+    font-size: 1.5rem;
+    font-family: 'Comic Sans MS';
+}
+
+.wallet-button {
+    background-color: #4682b4;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.wallet-button:hover {
+    background-color: #2b6da8;
+}
+
+.wallet-address {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+/* hello 样式 */
+.hello {
+    padding: 12px 15px;
+    /* 内边距增大，提升舒适度 */
+    width: 60%;
+    /* 将宽度调整为 60%，避免太宽 */
+    font-size: 1em;
+    margin: 15px auto;
+    /* 增加上下的间距，使布局更开阔 */
+    background-color: rgba(255, 255, 255, 0.7);
+    /* 透明背景 */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* 柔和的边框 */
+    border-radius: 8px;
+    /* 圆角样式 */
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 增加轻微阴影，增加立体感 */
+    font-family: 'Comic Sans MS';
+
+}
+
+
+.content {
+    text-align: center;
+    padding: 120px 20px 20px;
+}
+
+.send-button {
+    padding: 10px 20px;
+    background-color: #4682b4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+/* 刷新按钮样式 */
+.refresh-button {
+    padding: 10px 20px;
+    background-color: #4682b4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.refresh-button:hover {
+    background-color: #2b6da8;
+}
+
+/* 帖子区域样式 */
+.posts {
+    margin: 40px auto;
+    width: 80%;
+    text-align: center;
+}
+
+/* 单个帖子的卡片样式 */
+.post {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* 轻微阴影效果 */
+    text-align: left;
+}
+
+/* 帖子标题样式 */
+.post-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* 分割线样式 */
+.post hr {
+    border: none;
+    height: 1px;
+    background-color: #ddd;
+    margin: 10px 0;
+}
+
+/* 帖子内容文字 */
+.post-content {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+
+/* footer保持不变 */
+.footer {
+    background-color: #87cefa;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+input[type="text"],
+textarea {
+    padding: 12px 15px;
+    /* 内边距增大，提升舒适度 */
+    width: 60%;
+    /* 将宽度调整为 60%，避免太宽 */
+    font-size: 1.25em;
+    margin: 15px 0;
+    /* 增加上下的间距，使布局更开阔 */
+    background-color: rgba(255, 255, 255, 0.7);
+    /* 透明背景 */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* 柔和的边框 */
+    border-radius: 8px;
+    /* 圆角样式 */
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 增加轻微阴影，增加立体感 */
+}
+
+textarea {
+    height: 150px;
+    /* 固定高度，适合多行输入 */
+    resize: vertical;
+    /* 允许用户垂直调整高度 */
+}
