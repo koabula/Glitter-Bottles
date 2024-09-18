@@ -45,12 +45,16 @@
 
     <div class="posts" id="postList">
         <button id="refresh-button" class="refresh-button">Refresh</button>
+        <form id="myForm" action="/mybottles" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="wallet-address-input-my" name="wallet_address" value="">
+            <button type="button" class="refresh-button" onclick="submitFormInNewWindow()">My Bottles</button>
+        </form>
         <h2>The Bottles</h2>
         <!-- 这里是帖子列表的容器，后台生成 -->
         {% for bottle in bottles %}
         <div class="post">
             <h3 class="post-title">
-                <a href="#" data-post-id="{{ bottle.id }}">{{ bottle.title }}</a>
+                <a href="#" data-post-id="{{ bottle.id }}" target="_blank">{{ bottle.title }}</a>
             </h3>
             <hr>
             <p class="post-content">{{ bottle.content[:100] }}{% if bottle.content|length > 100 %}...{% endif %}</p>
@@ -67,16 +71,50 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var walletAddress = localStorage.getItem('walletAddress');
             if (walletAddress) {
                 var links = document.querySelectorAll('.post-title a');
-                links.forEach(function(link) {
+                links.forEach(function (link) {
                     var postId = link.getAttribute('data-post-id');
-                    link.href = `/post/${postId}?wallet_address=${encodeURIComponent(walletAddress)}`;
+                    link.href = `/post/${postId}`;
                 });
             }
         });
+    </script>
+
+    <script>
+        document.getElementById('refresh-button').addEventListener('click', function () {
+            location.reload();
+        });
+    </script>
+
+    <script>
+        function submitFormInNewWindow() {
+            var form = document.getElementById('myForm');
+            var formAction = form.action;
+            var formData = new FormData(form);
+
+            // Create a new form element
+            var newForm = document.createElement('form');
+            newForm.method = 'POST';
+            newForm.action = formAction;
+
+            // Add form data to the new form
+            for (var [key, value] of formData.entries()) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                newForm.appendChild(input);
+            }
+
+            // Open a new window and submit the form
+            var newWindow = window.open('', '_blank');
+            newForm.target = newWindow.name;
+            newWindow.document.body.appendChild(newForm);
+            newForm.submit();
+        }
     </script>
 </body>
 

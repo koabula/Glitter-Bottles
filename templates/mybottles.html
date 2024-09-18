@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="posts" id="MypostList">
+        <h2>My Bottles</h2>
+        <!-- 这里是帖子列表的容器，后台生成 -->
+        {% for bottle in mybottles %}
+        <div class="post">
+            <h3 class="post-title">
+                <a href="#" data-post-id="{{ bottle.id }}" target="_blank">{{ bottle.title }}</a>
+            </h3>
+            <hr>
+            <p class="post-content">{{ bottle.content[:100] }}{% if bottle.content|length > 100 %}...{% endif %}</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="footer">
+        <p>Have a Good Day </p>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var walletAddress = localStorage.getItem('walletAddress');
+        if (walletAddress) {
+            var links = document.querySelectorAll('.post-title a');
+            links.forEach(function(link) {
+                var postId = link.getAttribute('data-post-id');
+                link.href = `/post/${postId}`;
+            });
+        }
+    });
+</script>
+
+</html>

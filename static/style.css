@@ -12,6 +12,11 @@
     color: #fff;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -127,6 +132,7 @@ nav {
     font-size: 1.5em;
     margin-bottom: 10px;
     color: #333;
+    font-family: 'Comic Sans MS';
 }
 
 /* 分割线样式 */

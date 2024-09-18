@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,session
 
 import re
 import random
@@ -8,6 +8,8 @@ from glitter_sdk.core import Numeric, Coins
 from glitter_sdk.key.mnemonic import MnemonicKey
 
 app = Flask(__name__)
+app.secret_key = '123456'  # 用于加密 session
+
 
 class Bottle:
     def __init__(self, id, title, content,poster):
@@ -42,10 +44,33 @@ def index():
     
     return render_template('index.html', bottles=bottles)
 
+@app.route('/mybottles', methods=['POST','GET'])
+def my_bottles():
+       # 获取钱包地址
+    if request.method == 'POST':
+        wallet_address = request.form.get('wallet_address')
+        session['addr']=wallet_address
+        print(wallet_address+"hehe")
+    else:
+        wallet_address=session['addr']
+    if not wallet_address:
+        mybottles=[]
+    else:
+        print(wallet_address)
+        print(type(wallet_address))
+        sql = f"SELECT * FROM Bottles.posts WHERE poster = '{wallet_address}';"
+        db = client.db(mk)
+        my_posts = db.query(sql)
+        mybottles = [Bottle(id=post['id'], title=post['title'], content=post['content'].decode("utf-8"), poster=post['poster']) for post in my_posts]
+    return render_template('mybottles.html', mybottles=mybottles)
+    
+
 
 @app.route('/post/<int:post_id>')
 def post_detail(post_id):
     wallet_address = request.args.get('wallet_address', '')
+    session['addr']=wallet_address
+    print(wallet_address+"aaa")
     # print(wallet_address)
 
     # 从数据库中获取指定 post_id 的帖子数据
@@ -69,15 +94,17 @@ def post_detail(post_id):
     replies=[Reply(r['id'],r['content'].decode("utf-8"),r['postid'],r['replier']) for r in result]
     print(replies)
     print("hehe")
-    return render_template('post.html', bottle=bottle,replies=replies,addr=wallet_address)
+    return render_template('post.html', bottle=bottle,replies=replies)
 
 @app.route('/add_post', methods=['POST'])
 def add_post():
     if request.method == 'POST':
         # 获取钱包地址
         wallet_address = request.form.get('wallet_address')
+        print(wallet_address)
         if not wallet_address:
             return "请连接钱包", 400  # 如果钱包地址为空，返回错误
+        session['addr']=wallet_address
         
         # 获取帖子标题和内容
         title = request.form.get('title')
@@ -105,13 +132,7 @@ def add_comment():
 
     referrer = request.referrer
     # print(referrer)
-
-    match = re.search(r'[?&]wallet_address=([^&]*)', referrer)
-    if match:
-        wallet_address = match.group(1)
-    else:
-        wallet_address = ''
-    print("hi"+wallet_address)
+    wallet_address=session['addr']
     # 从 URL 中提取最后的数字
 
     # 尝试将其转换为整数

@@ -56,6 +56,8 @@ async function connectWallet() {
             
             // 设置隐藏字段的值为钱包地址
             document.getElementById("wallet-address-input").value = account;
+            document.getElementById("wallet-address-input-my").value = account;
+
         } catch (error) {
             console.error('User rejected the request', error);
         }
@@ -75,6 +77,8 @@ function disconnectWallet() {
     
     // 清空隐藏字段的值
     document.getElementById("wallet-address-input").value = "";
+    document.getElementById("wallet-address-input-my").value = "";
+
 }
 
 // 监听页面加载时设置钱包状态
@@ -85,6 +89,8 @@ window.addEventListener('load', () => {
         document.getElementById("connect-button").style.display = "none";
         document.getElementById("disconnect-button").style.display = "inline";
         document.getElementById("wallet-address-input").value = savedAddress;
+        document.getElementById("wallet-address-input-my").value = savedAddress;
+
     }
 });
 
@@ -102,6 +108,8 @@ if (window.ethereum) {
             document.getElementById("connect-button").style.display = "none";
             document.getElementById("disconnect-button").style.display = "inline";
             document.getElementById("wallet-address-input").value = account;
+            document.getElementById("wallet-address-input-my").value = account;
+
         }
     });
 }
@@ -166,6 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to set wallet address in the hidden input field
 function setWalletAddress(address) {
     document.getElementById('wallet-address-input').value = address;
+    document.getElementById('wallet-address-input-my').value = address;
+
 }
 
 // Simulated wallet connection (Replace with actual wallet connection logic)
